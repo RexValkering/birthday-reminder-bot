@@ -1,0 +1,9 @@
+env/
+*.pyc
+__pycache__/
+
+token.txt
+maintainer.txt
+weburl.txt
+birthdays.db
+logging.conf

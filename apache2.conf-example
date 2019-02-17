@@ -1,0 +1,29 @@
+<VirtualHost *:80>
+    RewriteEngine on
+    RewriteCond %{SERVER_NAME} =birthdaybot.example.org
+    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName birthdaybot.example.org
+    ServerAlias birthdaybot.example.org
+
+    LogLevel warn
+    ErrorLog ${APACHE_LOG_DIR}/birthdaybot_error.log
+    CustomLog ${APACHE_LOG_DIR}/birthdaybot_access.log combined
+
+    DocumentRoot /var/www/birthdaybot.example.org
+    WSGIScriptAlias / /var/www/birthdaybot.example.org/birthdaybot.wsgi
+
+    <Directory /var/www/birthdaybot.example.org>
+        WSGIApplicationGroup %{GLOBAL}
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    SSLEngine on
+
+    SSLCertificateFile /etc/letsencrypt/live/birthdaybot.example.org/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/birthdaybot.example.org/privkey.pem
+    Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>

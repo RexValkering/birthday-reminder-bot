@@ -1,0 +1,31 @@
+[loggers]
+keys=root,birthdaybot
+
+[handlers]
+keys=rotFileHandler
+
+[formatters]
+keys=simpleFormatter,sysLogFormatter
+
+[logger_root]
+level=DEBUG
+handlers=rotFileHandler
+
+[logger_birthdaybot]
+level=DEBUG
+handlers=rotFileHandler
+qualname=birthdayBot
+propagate=0
+
+[handler_rotFileHandler]
+class=logging.handlers.RotatingFileHandler
+level=DEBUG
+formatter=sysLogFormatter
+args=("/var/log/birthdaybot.log","a",100000,5,)
+
+[formatter_sysLogFormatter]
+format=%(asctime)s - %(name)s - %(levelname)s - %(levelno)s - %(pathname)s - %(lineno)d - %(message)s
+
+[formatter_simpleFormatter]
+format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+datefmt=
